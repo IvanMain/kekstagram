@@ -35,3 +35,24 @@ getNumber('а я томат');
 getNumber(2023);
 getNumber(-1);
 getNumber(1.5);
+
+const timeToMinutes = (time) => {
+  const [hours, minutes] = time.split(':').map(Number);
+
+  return hours * 60 + minutes;
+};
+
+const isWithinWorkingHours = (workStart, workEnd, meetingStart, meetingDuration) => {
+  const startMinutes = timeToMinutes(workStart);
+  const endMinutes = timeToMinutes(workEnd);
+  const meetingStartMinutes = timeToMinutes(meetingStart);
+  const meetingEndMinutes = meetingStartMinutes + meetingDuration;
+
+  return meetingStartMinutes >= startMinutes && meetingEndMinutes <= endMinutes;
+};
+
+isWithinWorkingHours('08:00', '17:30', '14:00', 90);
+isWithinWorkingHours('8:0', '10:0', '8:0', 120);
+isWithinWorkingHours('08:00', '14:30', '14:00', 90);
+isWithinWorkingHours('14:00', '17:30', '08:0', 90);
+isWithinWorkingHours('8:00', '17:30', '08:00', 900);
