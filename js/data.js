@@ -1,5 +1,5 @@
-import { likesRange, avatarsRange, commentsRange, userNames, userMessages } from './const.js';
-import { generateRandomInteger, getRandomItem } from './util.js';
+import { likesRange, avatarsRange, commentsRange, userNames, userMessages } from './const';
+import { generateRandomInteger, getRandomItem } from './util';
 
 const generateDataComment = (commentIndex) => {
   const id = commentIndex + 1;
