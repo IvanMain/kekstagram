@@ -1,3 +1,6 @@
+import { COUNT_COMMENTS } from './const';
+import { commentLoader } from './comment-loader';
+
 const body = document.body;
 const modalPicture = document.querySelector('.big-picture');
 const pictureImg = modalPicture.querySelector('.big-picture__img img');
@@ -20,48 +23,71 @@ const closeModal = () => {
   modalPicture.classList.add('hidden');
 };
 
-const createSocialCommentTemplate = ({ avatar, username, message }) => `
+const createSocialCommentTemplate = ({ avatar, name, message }) => `
   <li class="social__comment">
-    <img class="social__picture" src="${avatar}" alt="${username}" width="35" height="35">
+    <img class="social__picture" src="${avatar}" alt="${name}" width="35" height="35">
     <p class="social__text">${message}</p>
   </li>
 `;
 
-const getSocialComments = (comments) => comments.map(createSocialCommentTemplate).join('');
-
-const closeButtonClickHandler = () => {
-  closeModalPicture();
-};
-
-const modalPictureEscKeyDownHandler = (evt) => {
-  if (evt.key === 'Escape') {
-    closeModalPicture();
-  }
-};
-
-function closeModalPicture() {
-  closeModal();
-
-  closeButton.removeEventListener('click', closeButtonClickHandler);
-  document.removeEventListener('keydown', modalPictureEscKeyDownHandler);
-}
+const getSocialComments = (comments, count) => comments.slice(0, count).map(createSocialCommentTemplate).join('');
 
 const modalRender = ({ url, description, likes, comments }) => {
   openModal();
 
-  commentCount.classList.add('hidden');
   loadButton.classList.add('hidden');
+  commentCount.classList.add('hidden');
 
   pictureImg.src = url;
   pictureImg.alt = description;
   socialCaption.textContent = description;
   likesCount.textContent = likes;
-  commentShownCount.textContent = comments.length;
+  commentShownCount.textContent = Math.min(comments.length, COUNT_COMMENTS);
   commentTotalCount.textContent = comments.length;
 
   commentsContainer.replaceChildren();
-  commentsContainer.insertAdjacentHTML('beforeend', getSocialComments(comments));
+  commentsContainer.insertAdjacentHTML('beforeend', getSocialComments(comments, COUNT_COMMENTS));
 
+  if (comments.length > COUNT_COMMENTS) {
+    loadButton.classList.remove('hidden');
+    commentCount.classList.remove('hidden');
+  }
+
+  const closeButtonClickHandler = () => {
+    closeModalPicture();
+  };
+
+  const modalPictureEscKeyDownHandler = (evt) => {
+    if (evt.key === 'Escape') {
+      closeModalPicture();
+    }
+  };
+
+  const loadMore = commentLoader(comments);
+
+  const loadButtonClickHandler = () => {
+    const result = loadMore();
+
+    commentsContainer.insertAdjacentHTML('beforeend',
+      result.comments.map(createSocialCommentTemplate).join('')
+    );
+
+    commentShownCount.textContent = result.shownCount;
+
+    if (!result.hasMore) {
+      loadButton.classList.add('hidden');
+    }
+  };
+
+  function closeModalPicture() {
+    closeModal();
+
+    closeButton.removeEventListener('click', closeButtonClickHandler);
+    document.removeEventListener('keydown', modalPictureEscKeyDownHandler);
+    loadButton.removeEventListener('click', loadButtonClickHandler);
+  }
+
+  loadButton.addEventListener('click', loadButtonClickHandler);
   closeButton.addEventListener('click', closeButtonClickHandler);
   document.addEventListener('keydown', modalPictureEscKeyDownHandler);
 };

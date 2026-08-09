@@ -1,23 +1,25 @@
+const createPictureElement = (template, { id, url, description, likes, comments }) => {
+  const picture = template.cloneNode(true);
+
+  picture.dataset.id = id;
+  picture.querySelector('.picture__img').src = url;
+  picture.querySelector('.picture__img').alt = description;
+  picture.querySelector('.picture__comments').textContent = comments.length;
+  picture.querySelector('.picture__likes').textContent = likes;
+
+  return picture;
+};
+
 const galleryRender = (container, data) => {
-  const pictureTemplateContent = document.querySelector('#picture').content.querySelector('.picture');
+  const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
   const fragment = document.createDocumentFragment();
 
-  data.forEach(({ id, url, description, likes, comments }) => {
-    const picture = pictureTemplateContent.cloneNode(true);
-    const pictureImg = picture.querySelector('.picture__img');
-    const pictureComments = picture.querySelector('.picture__comments');
-    const pictureLikes = picture.querySelector('.picture__likes');
+  const pictures = data.map((item) => createPictureElement(pictureTemplate, item));
 
-    picture.dataset.id = id;
-    pictureImg.src = url;
-    pictureImg.alt = description;
-    pictureComments.textContent = comments.length;
-    pictureLikes.textContent = likes;
-
-    fragment.append(picture);
-  });
+  fragment.append(...pictures);
 
   container.append(fragment);
 };
+
 
 export { galleryRender };

@@ -1,5 +1,7 @@
 const MAX_DATA_ELEMENTS = 25;
 
+const COUNT_COMMENTS = 5;
+
 const likesRange = {
   MIN: 15,
   MAX: 200,
@@ -14,6 +16,8 @@ const commentsRange = {
   MIN: 0,
   MAX: 30,
 };
+
+const DECIMAL_RADIX = 10;
 
 const userNames = [
   'Артём', 'Анна', 'Михаил', 'Екатерина', 'Сергей', 'Ольга', 'Дмитрий', 'Наталья', 'Алексей', 'Мария'
@@ -35,4 +39,6 @@ export {
   commentsRange,
   userNames,
   userMessages,
+  COUNT_COMMENTS,
+  DECIMAL_RADIX,
 };

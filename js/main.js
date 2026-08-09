@@ -1,4 +1,4 @@
-import { MAX_DATA_ELEMENTS } from './const';
+import { MAX_DATA_ELEMENTS, DECIMAL_RADIX } from './const';
 import { generateGalleryData } from './data';
 import { galleryRender } from './gallery-render';
 import { modalRender } from './modal-render';
@@ -12,7 +12,7 @@ const picturesContainerClickHandler = (evt) => {
   const picture = evt.target.closest('.picture');
 
   if (picture) {
-    const pictureId = parseInt(picture.dataset.id, 10);
+    const pictureId = parseInt(picture.dataset.id, DECIMAL_RADIX);
     const pictureData = galleryData.find((item) => item.id === pictureId);
 
     modalRender(pictureData);
