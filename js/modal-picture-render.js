@@ -32,7 +32,7 @@ const createSocialCommentTemplate = ({ avatar, name, message }) => `
 
 const getSocialComments = (comments, count) => comments.slice(0, count).map(createSocialCommentTemplate).join('');
 
-const modalRender = ({ url, description, likes, comments }) => {
+const modalPictureRender = ({ url, description, likes, comments }) => {
   openModal();
 
   loadButton.classList.add('hidden');
@@ -57,7 +57,7 @@ const modalRender = ({ url, description, likes, comments }) => {
     closeModalPicture();
   };
 
-  const modalPictureEscKeyDownHandler = (evt) => {
+  const documentEscKeyDownHandler = (evt) => {
     if (evt.key === 'Escape') {
       closeModalPicture();
     }
@@ -83,13 +83,13 @@ const modalRender = ({ url, description, likes, comments }) => {
     closeModal();
 
     closeButton.removeEventListener('click', closeButtonClickHandler);
-    document.removeEventListener('keydown', modalPictureEscKeyDownHandler);
+    document.removeEventListener('keydown', documentEscKeyDownHandler);
     loadButton.removeEventListener('click', loadButtonClickHandler);
   }
 
   loadButton.addEventListener('click', loadButtonClickHandler);
   closeButton.addEventListener('click', closeButtonClickHandler);
-  document.addEventListener('keydown', modalPictureEscKeyDownHandler);
+  document.addEventListener('keydown', documentEscKeyDownHandler);
 };
 
-export { modalRender };
+export { modalPictureRender };

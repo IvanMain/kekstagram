@@ -710,15 +710,18 @@ main {
   border-radius: 5px;
 }
 
-.img-upload__field-wrapper--error {
+.img-upload__field-wrapper--error {}
+
+.img-upload__field-wrapper--error .pristine-error.text_span-error {
   background-color: #fd4d4b;
   color: #ffffff;
   font-size: 12px;
-  margin-top: -20px;
   z-index: 10000;
   position: relative;
+  display: block;
+  max-width: 450px;
+  margin: -10px auto 20px;
 }
-
 
 /**
  * Кнопка для отправки изображения
