@@ -1,3 +1,8 @@
+import { DESCRIPTION_RANGE, HASHTAGS_RANGE } from './const';
+import { isEscape } from './util';
+import { pictureScale } from './picture-scale';
+import { pictureEffects } from './picture-effects';
+
 let pristine;
 
 const body = document.body;
@@ -24,7 +29,7 @@ const closeButtonClickHandler = () => {
 };
 
 const documentEscKeyDownHandler = (evt) => {
-  if (evt.key === 'Escape') {
+  if (isEscape(evt)) {
     const activeElement = document.activeElement;
 
     if (activeElement === hashtagsField || activeElement === descriptionField) {
@@ -55,7 +60,7 @@ const validateHashtagsField = (hashtagsValue) => {
   const hashtags = hashtagsValue.split(' ').filter(Boolean);
   const reg = /^#[a-zа-яё0-9]{1,19}$/i;
 
-  if (hashtags.length > 5) {
+  if (hashtags.length > HASHTAGS_RANGE) {
     return false;
   }
 
@@ -75,10 +80,12 @@ const validateHashtagsField = (hashtagsValue) => {
   return true;
 };
 
-const validateDescriptionField = (value) => value.length <= 140;
+const validateDescriptionField = (value) => value.length <= DESCRIPTION_RANGE;
 
 function closeModalPicture() {
   closeModal();
+  pictureScale.destroy();
+  pictureEffects.destroy();
 
   if (pristine) {
     pristine.reset();
@@ -96,6 +103,8 @@ function closeModalPicture() {
 
 const modalUploadPictureRender = () => {
   openModal();
+  pictureScale.init();
+  pictureEffects.init();
 
   pristine = new Pristine(uploadForm, {
     classTo: 'img-upload__field-wrapper',
@@ -114,7 +123,7 @@ const modalUploadPictureRender = () => {
   pristine.addValidator(
     descriptionField,
     validateDescriptionField,
-    'Комментарий не больше 140 символов'
+    `Комментарий не больше ${DESCRIPTION_RANGE} символов`
   );
 
   closeButton.addEventListener('click', closeButtonClickHandler);

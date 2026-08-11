@@ -32,6 +32,62 @@ const userMessages = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
+const DESCRIPTION_RANGE = 140;
+
+const HASHTAGS_RANGE = 5;
+
+const controlScaleRange = {
+  MIN: 25,
+  MAX: 100,
+  STEP: 25,
+  DEFAULT: 100,
+};
+
+const EFFECTS_DATA = {
+  none: {
+    filter: '',
+    min: 0,
+    max: 100,
+    step: 1,
+    unit: '',
+  },
+  chrome: {
+    filter: 'grayscale',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: '',
+  },
+  sepia: {
+    filter: 'sepia',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: '',
+  },
+  marvin: {
+    filter: 'invert',
+    min: 0,
+    max: 100,
+    step: 0.1,
+    unit: '%',
+  },
+  phobos: {
+    filter: 'blur',
+    min: 1,
+    max: 3,
+    step: 0.1,
+    unit: 'px',
+  },
+  heat: {
+    filter: 'brightness',
+    min: 1,
+    max: 3,
+    step: 0.1,
+    unit: '',
+  },
+};
+
 export {
   MAX_DATA_ELEMENTS,
   likesRange,
@@ -41,4 +97,8 @@ export {
   userMessages,
   COUNT_COMMENTS,
   DECIMAL_RADIX,
+  DESCRIPTION_RANGE,
+  HASHTAGS_RANGE,
+  controlScaleRange,
+  EFFECTS_DATA,
 };
