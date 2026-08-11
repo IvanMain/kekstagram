@@ -1,4 +1,5 @@
 import { COUNT_COMMENTS } from './const';
+import { isEscape } from './util';
 import { commentLoader } from './comment-loader';
 
 const body = document.body;
@@ -58,7 +59,7 @@ const modalPictureRender = ({ url, description, likes, comments }) => {
   };
 
   const documentEscKeyDownHandler = (evt) => {
-    if (evt.key === 'Escape') {
+    if (isEscape(evt)) {
       closeModalPicture();
     }
   };
