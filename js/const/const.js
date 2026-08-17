@@ -18,7 +18,7 @@ const DESCRIPTION_RANGE = 140;
 
 const HASHTAGS_RANGE = 5;
 
-const controlScaleRange = {
+const ControlScaleRange = {
   MIN: 25,
   MAX: 100,
   STEP: 25,
@@ -77,7 +77,7 @@ export {
   DECIMAL_RADIX,
   DESCRIPTION_RANGE,
   HASHTAGS_RANGE,
-  controlScaleRange,
+  ControlScaleRange,
   EFFECTS_DATA,
   API_URL,
   Method,

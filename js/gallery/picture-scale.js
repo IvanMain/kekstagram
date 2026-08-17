@@ -1,4 +1,4 @@
-import { controlScaleRange, DECIMAL_RADIX } from '../const/const';
+import { ControlScaleRange, DECIMAL_RADIX } from '../const/const';
 
 const imgPreview = document.querySelector('.img-upload__preview img');
 const controlSmaller = document.querySelector('.scale__control--smaller');
@@ -15,14 +15,14 @@ const updatePreviewTransform = () => {
 const controlSmallerClickHandler = () => {
   const currentValue = parseInt(controlValue.value, DECIMAL_RADIX);
 
-  controlValue.value = currentValue > controlScaleRange.MIN ? `${currentValue - controlScaleRange.STEP}%` : `${currentValue}%`;
+  controlValue.value = currentValue > ControlScaleRange.MIN ? `${currentValue - ControlScaleRange.STEP}%` : `${currentValue}%`;
   updatePreviewTransform();
 };
 
 const controlBiggerClickHandler = () => {
   const currentValue = parseInt(controlValue.value, DECIMAL_RADIX);
 
-  controlValue.value = currentValue < controlScaleRange.MAX ? `${currentValue + controlScaleRange.STEP}%` : `${currentValue}%`;
+  controlValue.value = currentValue < ControlScaleRange.MAX ? `${currentValue + ControlScaleRange.STEP}%` : `${currentValue}%`;
   updatePreviewTransform();
 };
 
