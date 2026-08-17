@@ -1,4 +1,4 @@
-import { controlScaleRange, DECIMAL_RADIX } from './const';
+import { controlScaleRange, DECIMAL_RADIX } from '../const/const';
 
 const imgPreview = document.querySelector('.img-upload__preview img');
 const controlSmaller = document.querySelector('.scale__control--smaller');

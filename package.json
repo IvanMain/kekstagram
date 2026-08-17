@@ -5,10 +5,10 @@
   "description": "Личный проект «{{projectTitle}}» от HTML Academy",
   "repository": {
     "type": "git",
-    "url": "{{sshUrl}}"
+    "url": "https://github.com/IvanMain/kekstagram.git"
   },
   "bugs": {
-    "url": "{{bugsUrl}}"
+    "url": "https://github.com/IvanMain/kekstagram/issues"
   },
   "devDependencies": {
     "eslint": "8.48.0",

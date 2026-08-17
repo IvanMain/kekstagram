@@ -1,4 +1,4 @@
-import { COUNT_COMMENTS } from './const';
+import { COUNT_COMMENTS } from '../const/const';
 
 const commentLoader = (comments, step = COUNT_COMMENTS) => {
   let shownCount = step;
