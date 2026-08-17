@@ -1,10 +1,11 @@
-import { MAX_DATA_ELEMENTS, DECIMAL_RADIX } from './const';
-import { generateGalleryData } from './data';
-import { galleryRender } from './gallery-render';
-import { modalPictureRender } from './modal-picture-render';
-import { modalUploadPictureRender } from './modal-upload-picture-render';
+import { getData } from './api/api';
+import { DECIMAL_RADIX } from './const/const';
+import { renderErrorDataModal } from './error-data-modals/render-error-data-modal';
+import { galleryRender } from './gallery/gallery-render';
+import { modalPictureRender } from './gallery/modal-picture-render';
+import { modalUploadPictureRender } from './gallery/modal-upload-picture-render';
 
-const galleryData = generateGalleryData(MAX_DATA_ELEMENTS);
+const galleryData = await getData(renderErrorDataModal);
 const picturesContainerNode = document.querySelector('.pictures');
 const pictureUploadField = document.querySelector('#upload-file');
 

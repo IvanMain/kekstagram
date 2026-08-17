@@ -1,5 +1,5 @@
-import { COUNT_COMMENTS } from './const';
-import { isEscape } from './util';
+import { COUNT_COMMENTS } from '../const/const';
+import { isEscape } from '../utils/util';
 import { commentLoader } from './comment-loader';
 
 const body = document.body;

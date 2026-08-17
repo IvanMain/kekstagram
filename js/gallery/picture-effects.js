@@ -1,4 +1,4 @@
-import { EFFECTS_DATA } from './const';
+import { EFFECTS_DATA } from '../const/const';
 
 const imgPreview = document.querySelector('.img-upload__preview img');
 const slider = document.querySelector('.effect-level__slider');
@@ -38,7 +38,7 @@ const updatePreviewEffect = (effect) => {
     }
   });
 
-  applyEffect({ filter, max, unit });
+  applyEffect({ filter, value: max, unit });
 
   sliderInstance.on('update', (values) => {
     const value = Number(values[0]);
@@ -66,6 +66,10 @@ const destroy = () => {
     sliderInstance.destroy();
     sliderInstance = null;
   }
+
+  const effectNoneInput = document.querySelector('#effect-none');
+
+  effectNoneInput.checked = true;
 
   effectLevel.classList.add('hidden');
   imgPreview.style.filter = '';

@@ -1,7 +1,11 @@
-import { DESCRIPTION_RANGE, HASHTAGS_RANGE } from './const';
-import { isEscape } from './util';
+import { sendData } from '../api/api';
+import { DESCRIPTION_RANGE } from '../const/const';
+import { isEscape } from '../utils/util';
 import { pictureScale } from './picture-scale';
 import { pictureEffects } from './picture-effects';
+import { renderSuccessUploadModal } from '../upload-modals/render-success-upload-modal';
+import { renderErrorUploadModal } from '../upload-modals/render-error-upload-modal';
+import { isHashtagCountValid, isHashtagSyntaxValid, isUniqueHashtags, isDescriptionValid } from '../validation/validation-hashtags';
 
 let pristine;
 
@@ -23,7 +27,6 @@ const closeModal = () => {
   uploadOverlay.classList.add('hidden');
 };
 
-
 const closeButtonClickHandler = () => {
   closeModalPicture();
 };
@@ -31,8 +34,13 @@ const closeButtonClickHandler = () => {
 const documentEscKeyDownHandler = (evt) => {
   if (isEscape(evt)) {
     const activeElement = document.activeElement;
+    const errorModal = document.querySelector('.error');
 
     if (activeElement === hashtagsField || activeElement === descriptionField) {
+      return;
+    }
+
+    if (errorModal) {
       return;
     }
 
@@ -40,47 +48,42 @@ const documentEscKeyDownHandler = (evt) => {
   }
 };
 
+const switchLockButton = (button, state = true, text = 'Отправка...') => {
+  button.disabled = state;
+  button.textContent = text;
+};
+
+const sendFormData = async (form) => {
+  const isValid = pristine.validate();
+
+  if (!isValid) {
+    return false;
+  }
+
+  const formData = new FormData(form);
+  const submitButton = uploadForm.querySelector('.img-upload__submit');
+
+  switchLockButton(submitButton);
+
+  try {
+    await sendData(formData);
+
+    renderSuccessUploadModal();
+    closeModalPicture();
+  } catch (err) {
+    renderErrorUploadModal();
+  } finally {
+    switchLockButton(submitButton, false, 'Опубликовать');
+  }
+};
+
 const formSubmitHandler = (evt) => {
   evt.preventDefault();
 
-  const isValid = pristine.validate();
-
-  if (isValid) {
-    uploadForm.submit();
-  }
+  sendFormData(evt.target);
 };
 
 const hashtagsInputHandler = () => pristine.validate(hashtagsField);
-
-const validateHashtagsField = (hashtagsValue) => {
-  if (hashtagsValue.trim().length === 0) {
-    return true;
-  }
-
-  const hashtags = hashtagsValue.split(' ').filter(Boolean);
-  const reg = /^#[a-zа-яё0-9]{1,19}$/i;
-
-  if (hashtags.length > HASHTAGS_RANGE) {
-    return false;
-  }
-
-  const allValid = hashtags.every((tag) => reg.test(tag));
-
-  if (!allValid) {
-    return false;
-  }
-
-  const lowerCaseTags = hashtags.map((tag) => tag.toLowerCase());
-  const uniqueTags = new Set(lowerCaseTags);
-
-  if (lowerCaseTags.length !== uniqueTags.size) {
-    return false;
-  }
-
-  return true;
-};
-
-const validateDescriptionField = (value) => value.length <= DESCRIPTION_RANGE;
 
 function closeModalPicture() {
   closeModal();
@@ -116,13 +119,25 @@ const modalUploadPictureRender = () => {
 
   pristine.addValidator(
     hashtagsField,
-    validateHashtagsField,
-    'hashtags invalid'
+    isHashtagSyntaxValid,
+    'введён невалидный хэштег'
+  );
+
+  pristine.addValidator(
+    hashtagsField,
+    isHashtagCountValid,
+    'превышено количество хэштегов;'
+  );
+
+  pristine.addValidator(
+    hashtagsField,
+    isUniqueHashtags,
+    'хэштеги повторяются'
   );
 
   pristine.addValidator(
     descriptionField,
-    validateDescriptionField,
+    isDescriptionValid,
     `Комментарий не больше ${DESCRIPTION_RANGE} символов`
   );
 
