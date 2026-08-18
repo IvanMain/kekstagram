@@ -16,23 +16,9 @@ const debounce = (cb, delay = DEBOUNCE_TIME) => {
   };
 };
 
-const throttle = (cb, delay) => {
-  let lastTime = 0;
-
-  return (...rest) => {
-    const now = new Date();
-
-    if (now - lastTime >= delay) {
-      cb.apply(this, rest);
-      lastTime = now;
-    }
-  };
-};
-
 export {
   generateRandomInteger,
   getRandomItem,
   isEscape,
   debounce,
-  throttle
 };

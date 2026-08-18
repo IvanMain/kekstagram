@@ -5,7 +5,6 @@ const controlSmaller = document.querySelector('.scale__control--smaller');
 const controlBigger = document.querySelector('.scale__control--bigger');
 const controlValue = document.querySelector('.scale__control--value');
 
-
 const updatePreviewTransform = () => {
   const scale = parseInt(controlValue.value, DECIMAL_RADIX) / 100;
 

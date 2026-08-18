@@ -74,6 +74,8 @@ const TIME_SHOW_ERROR_MODAL = 5000;
 
 const DEBOUNCE_TIME = 500;
 
+const TYPES_FILE = ['.png', '.jpg', '.jpeg', '.webp'];
+
 export {
   COUNT_COMMENTS,
   DECIMAL_RADIX,
@@ -85,5 +87,6 @@ export {
   Method,
   Route,
   TIME_SHOW_ERROR_MODAL,
-  DEBOUNCE_TIME
+  DEBOUNCE_TIME,
+  TYPES_FILE
 };
