@@ -6,6 +6,7 @@ import { pictureEffects } from './picture-effects';
 import { renderSuccessUploadModal } from '../upload-modals/render-success-upload-modal';
 import { renderErrorUploadModal } from '../upload-modals/render-error-upload-modal';
 import { isHashtagCountValid, isHashtagSyntaxValid, isUniqueHashtags, isDescriptionValid } from '../validation/validation-hashtags';
+import { validationTypeFile } from '../validation/validation-type-file';
 
 let pristine;
 
@@ -16,6 +17,7 @@ const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
 const closeButton = uploadForm.querySelector('#upload-cancel');
 const hashtagsField = uploadForm.querySelector('[name="hashtags"]');
 const descriptionField = uploadForm.querySelector('[name="description"]');
+const uploadPreview = document.querySelector('.img-upload__preview img');
 
 const openModal = () => {
   body.classList.add('modal-open');
@@ -104,8 +106,17 @@ function closeModalPicture() {
   uploadForm.removeEventListener('submit', formSubmitHandler);
 }
 
-const modalUploadPictureRender = () => {
+const initUploadFile = (file) => {
+  if (file && validationTypeFile(file)) {
+    uploadPreview.src = URL.createObjectURL(file);
+  }
+};
+
+const modalUploadPictureRender = (file) => {
   openModal();
+
+  initUploadFile(file);
+
   pictureScale.init();
   pictureEffects.init();
 

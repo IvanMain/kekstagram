@@ -27,8 +27,10 @@ try {
     modalPictureRender(pictureData);
   };
 
-  const pictureUploadFieldClickHandler = () => {
-    modalUploadPictureRender();
+  const pictureUploadFieldClickHandler = (evt) => {
+    const file = evt.target.files[0];
+
+    modalUploadPictureRender(file);
   };
 
   galleryRender(picturesContainerNode, galleryData);
