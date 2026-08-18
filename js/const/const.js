@@ -72,6 +72,8 @@ const EFFECTS_DATA = {
 
 const TIME_SHOW_ERROR_MODAL = 5000;
 
+const DEBOUNCE_TIME = 500;
+
 export {
   COUNT_COMMENTS,
   DECIMAL_RADIX,
@@ -82,5 +84,6 @@ export {
   API_URL,
   Method,
   Route,
-  TIME_SHOW_ERROR_MODAL
+  TIME_SHOW_ERROR_MODAL,
+  DEBOUNCE_TIME
 };
