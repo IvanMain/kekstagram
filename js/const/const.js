@@ -18,7 +18,7 @@ const DESCRIPTION_RANGE = 140;
 
 const HASHTAGS_RANGE = 5;
 
-const controlScaleRange = {
+const ControlScaleRange = {
   MIN: 25,
   MAX: 100,
   STEP: 25,
@@ -72,15 +72,18 @@ const EFFECTS_DATA = {
 
 const TIME_SHOW_ERROR_MODAL = 5000;
 
+const DEBOUNCE_TIME = 500;
+
 export {
   COUNT_COMMENTS,
   DECIMAL_RADIX,
   DESCRIPTION_RANGE,
   HASHTAGS_RANGE,
-  controlScaleRange,
+  ControlScaleRange,
   EFFECTS_DATA,
   API_URL,
   Method,
   Route,
-  TIME_SHOW_ERROR_MODAL
+  TIME_SHOW_ERROR_MODAL,
+  DEBOUNCE_TIME
 };

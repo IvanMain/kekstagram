@@ -1,19 +1,13 @@
 import { API_URL, Method, Route } from '../const/const';
 
-const getData = async (onError) => {
-  try {
-    const response = await fetch(`${API_URL}${Route.GET_DATA}`);
+const getData = async () => {
+  const response = await fetch(`${API_URL}${Route.GET_DATA}`);
 
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-
-    return response.json();
-  } catch (error) {
-    onError();
-
-    return [];
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`);
   }
+
+  return response.json();
 };
 
 const sendData = async (formData) => {
@@ -26,7 +20,7 @@ const sendData = async (formData) => {
     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
   }
 
-  return await response.json();
+  return response.json();
 };
 
 export { getData, sendData };

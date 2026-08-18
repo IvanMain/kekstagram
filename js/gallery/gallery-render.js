@@ -9,7 +9,6 @@ const createPictureElement = (template, { id, url, description, likes, comments 
 
   return picture;
 };
-
 const galleryRender = (container, data) => {
   const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
   const fragment = document.createDocumentFragment();
@@ -17,7 +16,6 @@ const galleryRender = (container, data) => {
   const pictures = data.map((item) => createPictureElement(pictureTemplate, item));
 
   fragment.append(...pictures);
-
   container.append(fragment);
 };
 

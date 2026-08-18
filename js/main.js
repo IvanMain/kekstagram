@@ -1,35 +1,41 @@
 import { getData } from './api/api';
 import { DECIMAL_RADIX } from './const/const';
 import { renderErrorDataModal } from './error-data-modals/render-error-data-modal';
+import { renderFilters } from './filters/render-filters';
 import { galleryRender } from './gallery/gallery-render';
 import { modalPictureRender } from './gallery/modal-picture-render';
 import { modalUploadPictureRender } from './gallery/modal-upload-picture-render';
 
-const galleryData = await getData(renderErrorDataModal);
-const picturesContainerNode = document.querySelector('.pictures');
-const pictureUploadField = document.querySelector('#upload-file');
 
-const picturesContainerClickHandler = (evt) => {
-  const picture = evt.target.closest('.picture');
+try {
+  const galleryData = await getData();
+  const picturesContainerNode = document.querySelector('.pictures');
+  const pictureUploadField = document.querySelector('#upload-file');
 
-  if (!picture) {
-    return;
-  }
+  const picturesContainerClickHandler = (evt) => {
+    const picture = evt.target.closest('.picture');
 
-  evt.preventDefault();
+    if (!picture) {
+      return;
+    }
 
-  const pictureId = parseInt(picture.dataset.id, DECIMAL_RADIX);
-  const pictureData = galleryData.find((item) => item.id === pictureId);
+    evt.preventDefault();
 
-  modalPictureRender(pictureData);
-};
+    const pictureId = parseInt(picture.dataset.id, DECIMAL_RADIX);
+    const pictureData = galleryData.find((item) => item.id === pictureId);
 
+    modalPictureRender(pictureData);
+  };
 
-const pictureUploadFieldClickHandler = () => {
-  modalUploadPictureRender();
-};
+  const pictureUploadFieldClickHandler = () => {
+    modalUploadPictureRender();
+  };
 
-galleryRender(picturesContainerNode, galleryData);
+  galleryRender(picturesContainerNode, galleryData);
+  renderFilters(galleryData);
 
-picturesContainerNode.addEventListener('click', picturesContainerClickHandler);
-pictureUploadField.addEventListener('change', pictureUploadFieldClickHandler);
+  picturesContainerNode.addEventListener('click', picturesContainerClickHandler);
+  pictureUploadField.addEventListener('change', pictureUploadFieldClickHandler);
+} catch (error) {
+  renderErrorDataModal();
+}
